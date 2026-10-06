@@ -181,7 +181,11 @@ jobs:
       - name: Make defconfig
         run: |
           make $flags merged_defconfig
-
+      
+      - name: Verify namespace kernel config
+        run: |
+          grep -E '^(CONFIG_(UTS|PID|IPC|NET|USER)_NS=|# CONFIG_(UTS|PID|IPC|NET|USER)_NS is not set)' out/.config
+      
       - name: Make
         run: |
           make $flags -j$(nproc --all)
